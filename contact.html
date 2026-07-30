@@ -5,46 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Market Mela</title>
     <style>
-        :root { --primary: #131921; --secondary: #febd69; --accent: #232f3e; --bg-color: #eaeded; }
-        body { font-family: 'Amazon Ember', Arial, sans-serif; background: var(--bg-color); margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
-        
-        header { background: var(--primary); color: white; padding: 15px; position: sticky; top: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .nav-wrapper { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 22px; font-weight: 700; text-decoration: none; color: white; }
-        .logo span { color: var(--secondary); font-style: italic; }
-        
-        footer { background: var(--accent); color: white; padding: 20px; text-align: center; margin-top: auto; }
-        .footer-links a { color: #ddd; text-decoration: none; margin: 0 10px; font-size: 13px; }
+        :root { 
+            --primary: #F5A623;       /* Mela Warm Yellow */
+            --secondary: #B31221;     /* Vibrant Mela Red */
+            --accent: #6B0F1A;        /* Deep Maroon for Footer */
+            --bg-color: #FFF9F0;       /* Soft Cream Warm White */
+            --white: #ffffff;
+            --text-dark: #222222;
+            --text-gray: #666666;
+            --coupon-green: #188338;  /* Canopy Green */
+            --btn-bg: #188338;
+            --btn-hover: #12632A;
+        }
 
+        body { 
+            font-family: 'Amazon Ember', Arial, sans-serif; 
+            background: var(--bg-color); 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
+        
+        header { 
+            background: var(--primary); 
+            color: white; 
+            padding: 15px; 
+            position: sticky; 
+            top: 0; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            z-index: 1000;
+        }
+        .nav-wrapper { 
+            max-width: 1200px; 
+            margin: auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            font-size: 24px; 
+            font-weight: 800; 
+            text-decoration: none; 
+            color: var(--secondary); 
+            letter-spacing: 1px;
+        }
+        .logo span { 
+            color: #ffffff; 
+            font-style: normal; 
+            margin-left: 2px;
+        }
+        
         .content-box {
             background: white;
             max-width: 600px;
-            margin: 30px auto;
+            margin: 40px auto;
             padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #f0e2d0;
         }
-        h1 { color: var(--primary); text-align: center; }
-        .info-text { text-align: center; color: #555; margin-bottom: 30px; }
+        h1 { 
+            color: var(--secondary); 
+            text-align: center; 
+            margin-top: 0;
+            font-size: 28px;
+        }
+        .info-text { 
+            text-align: center; 
+            color: var(--text-dark); 
+            margin-bottom: 30px; 
+            line-height: 1.6;
+        }
         
         .contact-method {
-            background: #f7f7f7;
-            padding: 15px;
-            border-radius: 5px;
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 8px;
             text-align: center;
-            border: 1px solid #ddd;
+            border: 1px solid #f0e2d0;
             margin-bottom: 20px;
         }
-        .email-link { color: #007185; font-weight: bold; text-decoration: none; font-size: 18px; }
-        .email-link:hover { text-decoration: underline; color: #C7511F; }
+        .email-link { 
+            color: var(--secondary); 
+            font-weight: 700; 
+            text-decoration: none; 
+            font-size: 20px; 
+            display: inline-block;
+            margin-top: 5px;
+            transition: color 0.2s;
+        }
+        .email-link:hover { 
+            text-decoration: underline; 
+            color: var(--btn-hover); 
+        }
 
+        footer { 
+            background: var(--accent); 
+            color: white; 
+            padding: 25px 20px; 
+            text-align: center; 
+            margin-top: auto; 
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .footer-links a { 
+            color: #f2c94c; 
+            text-decoration: none; 
+            font-size: 13px; 
+            font-weight: 500;
+        }
+        .copyright {
+            font-size: 12px; 
+            color: #dddddd; 
+        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="nav-wrapper">
-            <a href="index.html" class="logo">Market<span>Mela</span></a>
+            <a href="index.html" class="logo">MARKET<span>MELA</span></a>
         </div>
     </header>
 
@@ -53,12 +139,12 @@
         <p class="info-text">Have a question about a product? Want to report a broken link? Or just want to say hi? We'd love to hear from you.</p>
 
         <div class="contact-method">
-            <p style="margin:0; font-size:14px; color:#555;">Shoot us an DM at:</p>
-            <a href="https://www.instagram.com/market_mela0" class="email-link">@market_mela0</a>
+            <p style="margin:0; font-size:14px; color:var(--text-gray);">Shoot us a DM at:</p>
+            <a href="https://www.instagram.com/market_mela0" target="_blank" class="email-link">@market_mela0</a>
         </div>
 
-        <p style="font-size:13px; color:#777; text-align: center; margin-top: 30px;">
-            We aim to respond to all inquiries within 24-48 hours.<br>
+        <p style="font-size:13px; color:var(--text-gray); text-align: center; margin-top: 30px; line-height: 1.6;">
+            We aim to respond to all inquiries within 24–48 hours.<br>
             Please note: We do not sell products directly. For order issues, please contact Amazon Support.
         </p>
     </div>
@@ -69,7 +155,7 @@
             <a href="privacy.html">Privacy Policy</a>
             <a href="contact.html">Contact Us</a>
         </div>
-        <div style="margin-top:10px; font-size:12px; color:#999;">&copy; Market Mela. Associated with Amazon.</div>
+        <div class="copyright">&copy; Market Mela. Associated with Amazon.</div>
     </footer>
 
 </body>
