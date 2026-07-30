@@ -1,6 +1,9 @@
 const AFFILIATE_TAG = "debasish08f-21"; // Apna Tag Yahan Daalo
 
 const products = [
+
+    "https://amzn.to/3QhtTyB",
+    "https://link.amazon/B06mnXe0D",
     "https://amzn.to/48NI9pI",
     "https://www.amazon.in/dp/B0DTTZ86TV",
     "https://amzn.to/491Lwbp",
