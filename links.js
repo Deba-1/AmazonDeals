@@ -3,7 +3,7 @@ const AFFILIATE_TAG = "debasish08f-21"; // Apna Tag Yahan Daalo
 const products = [
     
     "https://www.amazon.in/Ganesh-Vegetable-Dicer-Cutting-Blades/dp/B01BVDS1BE?crid=IIS1MKESJMD6&dib=eyJ2IjoiMSJ9.4Ua9SH62WhyGCwwfL3b5Px7SfhVadhnWBuu4h8s-Tya4-gkihUN3mU0BqhECl_NaYHNC05ToDAY5pZuJVjm1osy0LPUH5KwOoJ-3I4BtxgpPs_QDK47K24UTI80vUkGYXpRm4lMLdheOwXxOeczXwt2aZB3NPXdRf0kAvzCQ2Fh9NbrRT8URNfuFMvCNRVPAun6ZnqNJ1E-MA3-Tt2pMMXeiig2vZ5bpPmqXEj0UtKY3g4mhYAu2XRaaBrfjDP43ePOCDSYYMvfw-u6dUP2UpKf0HRo9kcenUz468pwVNfc.3yvYtdobVhgYfX4UxVDu1-8_zXkicEDEe6-UJYqqmbs&dib_tag=se&keywords=french%2Bfries%2Bcutter&qid=1785552245&sprefix=french%2Bfries%2Bcutter%2B%2Caps%2C343&sr=8-6&th=1&linkCode=ll2&tag=debasish08f-21&linkId=55b79ecd25848e5075b1137bd1504781&ref_=as_li_ss_tl",
-    "",
+    "https://www.amazon.in/ACTIVA-Aero-1200mm-Ceiling-Reversible/dp/B0G2MGMGDV?crid=ATHEWCSYD9RQ&dib=eyJ2IjoiMSJ9.cJ1HSpyGq8Zl771yjIMPiCVGFOguRtnycMVvpkWioNTjNvXL49Y3SSTAZFsfCbKXMnIE4rIUlvGCkS4rJuZMHtalXk7TjPeuIl68TYE0ngXr6T4-J9R_gdK30sUXjD8b7Z6xemzHDUORIwVgVLmEg_WJk3VeM8ivwUTRTj3JvA8EnLnzwgwuwqc6-UEsPus6xSDCMSiJ3ttTd5V7Hpiv9kAa9tjZGMJnUS2cSt4W93c.5BDgfULCuNsriQMNC4-a0YIegCISoGD8m9AjGotD1GQ&dib_tag=se&keywords=Fan%2Bwith%2Blight&qid=1785552382&sprefix=fan%2Bwith%2Blight%2Caps%2C408&sr=8-3&th=1&linkCode=ll2&tag=debasish08f-21&linkId=19431457b2773a0260ca49be88520a53&ref_=as_li_ss_tl",
     "",
     "",
     "",
