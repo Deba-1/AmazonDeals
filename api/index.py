@@ -1,108 +1,61 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 import requests
 from bs4 import BeautifulSoup
-import re
+from fastapi import FastAPI, Query
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-def clean_price(price_str):
-    if not price_str: return 0
-    clean = re.sub(r'[^\d.]', '', str(price_str))
-    try: return float(clean)
-    except: return 0
+# Realistic browser headers to bypass basic Amazon anti-bot blocks
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept-Language": "en-IN,en;q=0.9",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Referer": "https://www.google.com/"
+}
 
 @app.get("/api/check")
-def check_price(url: str, tag: str):
-    # Standard Browser Headers (Jo pehle chal rahe the)
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9",
-    }
+def check_product(url: str = Query(...), tag: str = Query(None)):
+    if not url or not url.strip():
+        return {"error": "Invalid URL"}
     
     try:
-        session = requests.Session()
-        # 1. Direct Request (Allow Redirects for amzn.to)
-        response = session.get(url, headers=headers, timeout=10, allow_redirects=True)
+        # Send request with custom headers & follow redirects
+        response = requests.get(url, headers=HEADERS, timeout=10)
         
-        if response.status_code != 200: 
-            return {"error": "Link Blocked"}
-
-        final_url = response.url
-
-        # 2. ASIN Extraction
-        match = re.search(r'/(dp|gp/product)/([A-Z0-9]{10})', final_url)
-        asin = match.group(2) if match else "UNKNOWN"
-        
-        affiliate_link = f"https://www.amazon.in/dp/{asin}?tag={tag}" if asin != "UNKNOWN" else final_url
-
+        if response.status_code != 200:
+            return {"error": f"Failed to fetch page. Status: {response.status_code}"}
+            
         soup = BeautifulSoup(response.content, "lxml")
 
-        # 3. Title
-        title = soup.find("span", attrs={"id": "productTitle"})
-        title = title.get_text().strip()[:70] + "..." if title else "Amazon Product"
+        # Extract Title
+        title_el = soup.find("span", {"id": "productTitle"})
+        title = title_el.get_text(strip=True) if title_el else "Amazon Product"
 
-        # 4. Image
-        image = "https://placehold.co/200?text=No+Image"
-        img_div = soup.find("div", attrs={"id": "imgTagWrapperId"})
-        if img_div and img_div.find("img"): 
-            image = img_div.find("img")["src"]
-        else:
-            landing_img = soup.find("img", attrs={"id": "landingImage"})
-            if landing_img: image = landing_img["src"]
+        # Extract Image
+        img_el = soup.find("img", {"id": "landingImage"}) or soup.find("img", {"id": "imgBlkFront"})
+        image = ""
+        if img_el:
+            image = img_el.get("src") or img_el.get("data-old-hires") or ""
 
-        # 5. Price
-        price_tag = soup.find("span", attrs={"class": "a-price-whole"})
-        if not price_tag: price_tag = soup.find("span", attrs={"class": "a-offscreen"})
-        
-        selling_price_str = "Check Price"
-        selling_price_val = 0
-        
-        if price_tag:
-            raw_price = price_tag.get_text().strip().replace('.', '')
-            selling_price_str = "₹" + raw_price
-            selling_price_val = clean_price(selling_price_str)
+        # Extract Price
+        price_el = soup.find("span", {"class": "a-price-whole"})
+        price = price_el.get_text(strip=True) if price_el else ""
 
-        # 6. MRP & Discount
-        mrp_str = ""
-        discount_str = ""
-        mrp_tag = soup.find("span", attrs={"class": "a-text-price"})
-        if mrp_tag:
-            mrp_inner = mrp_tag.find("span", attrs={"class": "a-offscreen"})
-            if mrp_inner:
-                mrp_str = mrp_inner.get_text().strip()
-                mrp_val = clean_price(mrp_str)
-                if mrp_val > selling_price_val and mrp_val > 0:
-                    off = int(((mrp_val - selling_price_val) / mrp_val) * 100)
-                    if off > 0: discount_str = f"-{off}%"
+        # Extract MRP / Original Price
+        mrp_el = soup.find("span", {"class": "a-price a-text-price"})
+        mrp = mrp_el.find("span", {"class": "a-offscreen"}).get_text(strip=True) if mrp_el and mrp_el.find("span", {"class": "a-offscreen"}) else ""
 
-        # 7. Offers (Simple Text Check)
-        coupon_text = ""
-        page_text = soup.get_text()
-        if "Apply" in page_text and "coupon" in page_text:
-            coupon_text = "Coupon Available"
-
-        bank_offer = False
-        if "Bank Offer" in page_text:
-            bank_offer = True
+        # Build final link with affiliate tag appended
+        final_url = response.url
+        if tag and "tag=" not in final_url:
+            connector = "&" if "?" in final_url else "?"
+            final_url = f"{final_url}{connector}tag={tag}"
 
         return {
             "title": title,
-            "price": selling_price_str,
-            "mrp": mrp_str,
-            "discount": discount_str,
-            "coupon": coupon_text,
-            "bank_offer": bank_offer,
             "image": image,
-            "link": affiliate_link
+            "price": price,
+            "mrp": mrp,
+            "link": final_url
         }
 
     except Exception as e:
